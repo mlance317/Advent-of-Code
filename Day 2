@@ -1,0 +1,51 @@
+
+
+###part 1
+def counter(letter, password):
+    count = 0
+    for char in password:
+        if char == letter[0]:
+            count += 1
+    return count
+
+def lowhigh(a_range):
+    range_list = a_range.split("-")
+    return range_list
+
+def passcheck(filename):
+    i_file = open(filename, "r")
+    valid = 0
+    for line in i_file:
+        line = line.strip().split()
+        the_range = lowhigh(line[0])
+        freq = counter(line[1],line[2])
+        if int(the_range[0]) <= int(freq) <= int(the_range[1]):
+            valid +=1
+    return valid
+
+###part 2
+
+def other_passcheck(filename):
+    i_file = open(filename, "r")
+
+    valid = 0
+
+    for line in i_file:
+        line = line.strip().split()
+
+        #isolate first and second indexes
+        indices = lowhigh(line[0])
+        first = int(indices[0])
+        second = int(indices[1])
+
+        #isolate letter req
+        temp_letter = line[1]
+        letter = temp_letter[0]
+        
+        #get password
+        password = line[2]
+
+        if (((password[first-1] == letter) and (password[second-1] != letter)) or ((password[first-1] != letter) and (password[second-1] == letter))):
+            valid += 1
+
+    return valid
